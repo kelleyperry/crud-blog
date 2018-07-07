@@ -19,13 +19,14 @@ var staticPath = 'public';
 app.use('/api/', posts);
 app.use(express.static(staticPath));
 app.use('/', express.static(staticPath));
+app.use('/post/*', express.static(staticPath));
 app.use('/posts', express.static(staticPath));
 app.use('/new', express.static(staticPath));
 
 mongoose.connect('mongodb://kelleyperry:Zrgnoia6@localhost:27017/blogDb');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
-db.once('open', function() {
+db.once('open', function(){
 	console.log('DB Connected');
 });
 

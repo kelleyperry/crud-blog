@@ -13,7 +13,7 @@ postSchema.plugin(timestamps);
 
 var Post = mongoose.model('Post', postSchema);
 
-router.get('/posts', function(req, res, next) {
+router.get('/posts', function(req, res, next){
 	Post.find({})
 		// .select({
 		// 	content: 0,
@@ -25,7 +25,7 @@ router.get('/posts', function(req, res, next) {
 		.sort({
 			createdAt: -1
 		})
-		.exec(function(err, posts) {
+		.exec(function(err, posts){
 			if (err) {
 				console.log(err);
 				return res.status(500).json({
@@ -34,6 +34,19 @@ router.get('/posts', function(req, res, next) {
 			}
 			res.json(posts);
 		});
+});
+
+router.get('/posts/:id', function(req, res, next){
+	Post.findById({ _id: req.params.id }, function(err, post){
+		if (err) {
+			console.log(err);
+			return res.status(500).json({ message: 'Could not find post with that Id' });
+		}
+		if (!post) {
+			return res.status(404).json({ messafe: 'could not find that post' });
+		}
+		res.json(post);
+	});
 });
 
 module.exports = router;

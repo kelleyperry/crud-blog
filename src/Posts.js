@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import { Link } from 'react-router-dom';
 import { Provider as RebassProvider, Heading, Text } from 'rebass';
 import styled from 'styled-components';
-import {
-	space,
-	width,
-	fontSize,
-	color,
-	borders,
-	borderColor
-} from 'styled-system';
 
-const StyledUl = styled.ul`
-	${space};
-	list-style: none;
-`;
+const StyledUl = styled.ul`list-style: none;`;
 
 const StyledLi = styled.li`
-	${space};
-	${borders};
-	${borderColor};
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ccc;
+	&:last-child {
+		border: none;
+	}
 `;
 
 class Posts extends Component {
@@ -54,37 +47,20 @@ class Posts extends Component {
 					fonts: {
 						sans: '"Avenir Next", Helvetica, sans-serif'
 					},
-					fontSizes: [12, 16, 24, 36, 48, 72]
+					fontSizes: [ 12, 16, 24, 36, 48, 72 ]
 				}}
 			>
 				<StyledUl p={0} m={0}>
-					{isFetching &&
-						items.posts &&
-						items.posts.length === 0 && <h2>Loading ...</h2>}
-					{!isFetching &&
-						items.posts &&
-						items.posts.length === 0 && <h2>Empty...</h2>}
+					{isFetching && items.posts && items.posts.length === 0 && <h2>Loading ...</h2>}
+					{!isFetching && items.posts && items.posts.length === 0 && <h2>Empty...</h2>}
 					{items.posts &&
 						items.posts.map((post, i) => (
-							<StyledLi
-								mb={3}
-								pb={3}
-								key={i}
-								borderBottom="1px solid"
-								borderColor="silver"
-							>
-								<Text fontSize={[0, 1]}>
-									<span>Posted on {this.getDateCreated(post._id)}</span>{' '}
-									<span> by {post.author}</span>
-								</Text>
-								<Heading
-									children={post.title}
-									m={0}
-									fontSize={[2, 3]}
-									color="maroon"
-									fontWeight={400}
-								/>
-								<Text fontSize={[0, 1]}>{post.content}</Text>
+							<StyledLi key={i}>
+								<span>Posted on {this.getDateCreated(post._id)}</span> <span> by {post.author}</span>
+								<br />
+								<Link to="/post:post.id">{post.title}</Link>
+								<br />
+								{post.content}
 							</StyledLi>
 						))}
 				</StyledUl>
@@ -93,7 +69,7 @@ class Posts extends Component {
 	}
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state){
 	return {
 		items: state.posts
 	};
