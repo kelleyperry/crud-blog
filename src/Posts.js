@@ -58,7 +58,7 @@ class Posts extends Component {
 							<StyledLi key={i}>
 								<span>Posted on {this.getDateCreated(post._id)}</span> <span> by {post.author}</span>
 								<br />
-								<Link to="/post:post.id">{post.title}</Link>
+								<Link to={`/posts/${post._id}`}>{post.title}</Link>
 								<br />
 								{post.content}
 							</StyledLi>

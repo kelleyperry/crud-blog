@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as actions from './actions';
+import { connect } from 'react-redux';
 
 export class Post extends Component {
 	getDateCreated(id) {
@@ -7,18 +9,34 @@ export class Post extends Component {
 		return date.toString();
 	}
 
+	componentDidMount() {
+		const { dispatch, match } = this.props;
+		dispatch(actions.fetchPost(match.params.id));
+	}
+
+	componentDidUpdate(prevProps) {
+		const { dispatch, match } = this.props;
+		if (match.params.id !== prevProps.match.params.id) {
+			dispatch(actions.fetchPosts(match.params.id));
+		}
+	}
+
 	render() {
+		const { post, isFetching } = this.props;
 		return (
 			<React.Fragment>
-				<span>Posted on {this.getDateCreated(post._id)}</span>
-				<span> by {post.author}</span>
-				<br />
-				{post.title}
-				<br />
-				{post.content}
+				<div>{post.activePost.author}</div>
+				<div>{post.activePost.title}</div>
+				<div>{post.activePost.content}</div>
 			</React.Fragment>
 		);
 	}
 }
 
-export default Post;
+function mapStateToProps(state){
+	return {
+		post: state.post
+	};
+}
+
+export default connect(mapStateToProps)(Post);

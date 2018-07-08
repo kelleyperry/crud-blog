@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Posts from './Posts';
 import Post from './Post';
-import { Route, IndexRoute } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 
 injectGlobal`
@@ -48,10 +48,11 @@ const StyledSection = styled.section`
 export class Layout extends Component {
 	render() {
 		return (
-			<StyledSection id="page">
+			<StyledSection id='page'>
 				<header>Header</header>
 				<main>
-					<Posts />
+					<Route exact path='/' component={Posts} />
+					<Route path='/posts/:id' component={Post} />
 				</main>
 				<footer>Footer</footer>
 			</StyledSection>
