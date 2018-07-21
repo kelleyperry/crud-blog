@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "./actions";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StyledUl = styled.ul`list-style: none;`;
 
@@ -16,34 +16,34 @@ const StyledLi = styled.li`
 `;
 
 class Posts extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { dispatch, post } = this.props;
     dispatch(actions.fetchPosts(post));
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     const { dispatch, post } = this.props;
     if (post !== prevProps.post) {
       dispatch(actions.fetchPosts(post));
     }
   }
 
-  getDateCreated(id) {
+  getDateCreated (id) {
     var timestamp = id.toString().substring(0, 8);
     var date = new Date(parseInt(timestamp, 16) * 1000);
     return date.toString();
   }
 
-  render() {
+  render () {
     const { items, isFetching } = this.props;
     return (
       <StyledUl p={0} m={0}>
         {isFetching && items.posts && items.posts.length === 0 && <h2>Loading ...</h2>}
-        {!isFetching && items.posts && items.posts.length === 0 && <h2>Empty...</h2>}
+        {!isFetching && items.posts && items.posts.length === 0 && <h2>Loading...</h2>}
         {items.posts &&
           items.posts.map((post, i) => (
             <StyledLi key={i}>
@@ -59,9 +59,9 @@ class Posts extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state){
   return {
-    items: state.posts
+    items : state.posts
   };
 }
 
