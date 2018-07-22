@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import Posts from './Posts';
-import Post from './Post';
-import { Route } from 'react-router-dom';
-import styled, { injectGlobal } from 'styled-components';
+import React, { Component } from "react";
+import Posts from "./Posts";
+import Post from "./Post";
+import { Route, NavLink } from "react-router-dom";
+import styled, { injectGlobal } from "styled-components";
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800');
@@ -14,6 +14,8 @@ injectGlobal`
     padding: 0;
     width: 100%;
     height: 100%;
+    color: #333;
+    line-height: 1.5;
   }
 
   #root {
@@ -28,8 +30,14 @@ const StyledSection = styled.section`
   grid-template-columns: 20% auto auto 20%;
   grid-template-areas: "header header header header" ". main main ." "footer footer footer footer";
   header {
-    background: #ccc;
     grid-area: header;
+    .inner {
+      nav {
+        a {
+          color: #eee;
+        }
+      }
+    }
   }
 
   main {
@@ -42,10 +50,11 @@ const StyledSection = styled.section`
   }
   footer {
     grid-area: footer;
-    background: #ccc;
   }
   header,
   footer {
+    background: #78a;
+    color: #eee;
     display: grid;
     height: 100%;
     grid-template-columns: 20% auto auto 20%;
@@ -58,18 +67,24 @@ const StyledSection = styled.section`
 `;
 
 export class Layout extends Component {
-  render () {
+  render() {
     return (
-      <StyledSection id='page'>
+      <StyledSection id="page">
         <header>
-          <div className='inner'>Header</div>
+          <div className="inner">
+            <nav>
+              <NavLink activeClassName="selected" to="/">
+                Home
+              </NavLink>
+            </nav>
+          </div>
         </header>
         <main>
-          <Route exact path='/' component={Posts} />
-          <Route path='/posts/:id' component={Post} />
+          <Route exact path="/" component={Posts} />
+          <Route path="/posts/:id" component={Post} />
         </main>
         <footer>
-          <div className='inner'>footer</div>
+          <div className="inner">footer</div>
         </footer>
       </StyledSection>
     );
