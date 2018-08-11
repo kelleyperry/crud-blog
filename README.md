@@ -1,1 +1,1 @@
-blog using react, redux, mongo, and styled-system
+blog using react, redux, mongo, and styled-components
